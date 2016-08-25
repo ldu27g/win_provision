@@ -1,3 +1,6 @@
+#############################
+# Set Executionpolicy Remotesigned
+#############################
 powershell Set-ExecutionPolicy RemoteSigned
 
 #############################
@@ -12,33 +15,17 @@ PowerShell.exe -Command "iex -Command ((gc \"%THIS_PATH:`=``%\") -join \"`n\")"
 exit /b %errorlevel%
 ') | sv -Name TempVar
 
-##########################################################
-##############                      ######################
-############## PowerShell Execution ######################
-##############                      ######################
-##########################################################
+################################################################
+##############                            ######################
+############## PowerShell Execution Start ######################
+##############                            ######################
+################################################################
 
 #############################
 # Make directory
 #############################
 New-Item c:\Ansible_work -itemType Directory
 Set-Location c:\Ansible_work
-
-#############################
-# Ignore SSL Error
-#############################
-add-type @"
-    using System.Net;
-    using System.Security.Cryptography.X509Certificates;
-    public class TrustAllCertsPolicy : ICertificatePolicy {
-        public bool CheckValidationResult(
-            ServicePoint srvPoint, X509Certificate certificate,
-            WebRequest request, int certificateProblem) {
-            return true;
-        }
-    }
-"@
-[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
 #############################
 # Ansible Configure
@@ -54,3 +41,8 @@ Invoke-WebRequest -Uri http://10.122.26.149/root/win-provision-scripts/raw/maste
 .\create_ansible_user.ps1 -SkipNetworkProfileCheck
 
 
+################################################################
+##############                            ######################
+############## PowerShell Execution End   ######################
+##############                            ######################
+################################################################
