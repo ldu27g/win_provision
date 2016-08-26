@@ -32,13 +32,13 @@ Set-Location c:\Ansible_work
 #############################
 # Execute  Ansible Preparation Scripts
 Invoke-WebRequest -Uri http://10.122.26.149/root/win-provision-scripts/raw/master/ConfigureRemotingForAnsible.ps1 -OutFile ConfigureRemotingForAnsible.ps1
-.\ConfigureRemotingForAnsible.ps1 -SkipNetworkProfileCheck
+.\ConfigureRemotingForAnsible.ps1 -SkipNetworkProfileCheck -ForceNewSSLCert
 
 #############################
 # Create Ansible User
 #############################
 Invoke-WebRequest -Uri http://10.122.26.149/root/win-provision-scripts/raw/master/create_ansible_user.ps1 -OutFile create_ansible_user.ps1
-.\create_ansible_user.ps1 -SkipNetworkProfileCheck
+.\create_ansible_user.ps1
 
 
 ################################################################
